@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Triple Explorer</title>
+
+        <script type="text/javascript" src="./lib/vis.js"></script>
+        <script type="text/javascript" src="./lib/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="./triple-explorer.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="./te.css"></link>
+    </head>
+
+<body width="100%" height="100%">
+
+    <div id="mynetwork"></div>
+
+    <script type="text/javascript">
+
+        // create a DataSet
+        var options = {};
+        var nodes = new vis.DataSet(options);
+        var edges = new vis.DataSet(options);
+
+        // add items
+        // note that the data items can contain different properties and data formats
+
+        // create an array with nodes
+        
+        
+        // subscribe to any change in the DataSet
+        nodes.on('*', function (event, properties, senderId) {
+          //console.log('node add event', event, properties);
+        });
+        edges.on('*', function (event, properties, senderId) {
+          //console.log('edge add event', event, properties);
+        });
+
+        // create a network
+        var container = document.getElementById('mynetwork');
+        var data = {
+            nodes: nodes,
+            edges: edges
+        };
+        var options = {
+            width: '1200px',
+            height: '900px',
+            stabilize: false,
+            edges: {
+                width: 2,
+                style: 'arrow',
+                color: 'gray'
+            }
+        };
+        var network = new vis.Network(container, data, options);
+    
+
+        // add event listener
+        network.on('doubleClick', onSelect);
+
+
+        // Initial load
+        $(document).ready(function() {
+            // Call Ajax method
+            var nodeUri = '';
+            loadNode(nodeUri);
+            console.log(nodeUri);
+        });
+    </script>
+</body>
+</html>
