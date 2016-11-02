@@ -76,12 +76,10 @@ declare function te:unescapeUnicode($string as xs:string) (:as xs:string:) {
   )
 };
 
-(:~ TODO -- Make more random :)
+(:~ Pick a random triple from the database :)
 declare function te:getRandomTriple() {
-  let $query := 'SELECT * WHERE { ?s ?p ?o . } ORDER BY ?p LIMIT ' || xdmp:random() mod 100
-  let $results := sem:sparql-values($query, map:map() )
-  let $randomTriple := map:get($results, "o")[fn:last()]
-  return $randomTriple
+  let $triple := cts:search(/sem:triples/sem:triple, cts:and-query(()), "score-random")[1]
+  return sem:iri($triple/sem:subject/fn:string())
 };
 
 
